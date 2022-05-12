@@ -1,6 +1,7 @@
 import { useReducer, useState } from 'react';
 import styles from './ShoppingList.css';
 import { useShoppingList } from '../context/ShoppingListProvider';
+import Item from '../components/Item';
 
 export default function ShoppingList() {
   const [item, setItem] = useState('');
@@ -27,9 +28,11 @@ export default function ShoppingList() {
           />
           <button>Add</button>
         </form>
-        {state.map((item) => (
-          <p>{item.item}</p>
-        ))}
+        <ul>
+          {state.map((item) => {
+            return <Item key={item.id} item={item.item} />;
+          })}
+        </ul>
       </main>
     </>
   );
