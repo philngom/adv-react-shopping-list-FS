@@ -5,7 +5,7 @@ import Item from '../components/Item';
 
 export default function ShoppingList() {
   const [item, setItem] = useState('');
-  const { addItem, state, update } = useShoppingList();
+  const { addItem, state, update, deleteItem } = useShoppingList();
   console.log('in shopping', state);
 
   const handleAddItem = (e) => {
@@ -33,7 +33,7 @@ export default function ShoppingList() {
           {state.map((item) => {
             return (
               <li key={item.id} className={styles.bullet}>
-                <Item item={item} update={update} />
+                <Item item={item} update={update} deleteItem={deleteItem} />
               </li>
             );
           })}

@@ -1,7 +1,7 @@
 import styles from './Item.css';
 import { useState } from 'react';
 
-export default function Item({ item, update }) {
+export default function Item({ item, update, deleteItem }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updateItem, setUpdateItem] = useState(item.item);
 
@@ -44,6 +44,7 @@ export default function Item({ item, update }) {
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </>
       )}
+      <button onClick={() => deleteItem(item)}>Delete</button>
     </>
   );
 }

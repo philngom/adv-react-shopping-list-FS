@@ -24,6 +24,10 @@ const reducer = (state, action) => {
           return item;
         }
       });
+    case 'DELETE':
+      return state.filter((item) => {
+        return item.id !== action.payload.item.id;
+      });
     default:
       throw new Error('In reducer function');
   }
@@ -42,8 +46,14 @@ export const ShoppingListProvider = ({ children }) => {
     dispatch({ type: 'UPDATE', payload: { item } });
   };
 
+  const deleteItem = (item) => {
+    dispatch({ type: 'DELETE', payload: { item } });
+  };
+
   return (
-    <ShoppingListContext.Provider value={{ addItem, state, update }}>
+    <ShoppingListContext.Provider
+      value={{ addItem, state, update, deleteItem }}
+    >
       {children}
     </ShoppingListContext.Provider>
   );
