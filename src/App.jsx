@@ -1,5 +1,10 @@
 import ShoppingList from './views/ShoppingList';
+import { ShoppingListProvider } from './context/ShoppingListProvider';
 
 export default function App() {
-  return <ShoppingList />;
+  return (
+    <ShoppingListProvider>
+      <ShoppingList />
+    </ShoppingListProvider>
+  );
 }
