@@ -3,9 +3,9 @@ import { createContext, useContext, useReducer } from 'react';
 const initialState = [];
 
 const reducer = (state, action) => {
-  console.log(action);
+  console.log(action, state);
   switch (action.type) {
-    case 'add':
+    case 'ADD':
       return [
         ...state,
         {
@@ -14,6 +14,16 @@ const reducer = (state, action) => {
           done: false,
         },
       ];
+    case 'UPDATE':
+      return state.map((item) => {
+        if (item.id === action.payload.item.id) {
+          return {
+            ...action.payload.item,
+          };
+        } else {
+          return item;
+        }
+      });
     default:
       throw new Error('In reducer function');
   }
@@ -25,11 +35,15 @@ export const ShoppingListProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addItem = (item) => {
-    dispatch({ type: 'add', payload: { item } });
+    dispatch({ type: 'ADD', payload: { item } });
+  };
+
+  const update = (item) => {
+    dispatch({ type: 'UPDATE', payload: { item } });
   };
 
   return (
-    <ShoppingListContext.Provider value={{ addItem, state }}>
+    <ShoppingListContext.Provider value={{ addItem, state, update }}>
       {children}
     </ShoppingListContext.Provider>
   );

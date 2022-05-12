@@ -5,7 +5,8 @@ import Item from '../components/Item';
 
 export default function ShoppingList() {
   const [item, setItem] = useState('');
-  const { addItem, state } = useShoppingList();
+  const { addItem, state, update } = useShoppingList();
+  console.log('in shopping', state);
 
   const handleAddItem = (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export default function ShoppingList() {
           {state.map((item) => {
             return (
               <li key={item.id} className={styles.bullet}>
-                <Item item={item} />
+                <Item item={item} update={update} />
               </li>
             );
           })}
