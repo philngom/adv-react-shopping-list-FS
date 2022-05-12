@@ -30,7 +30,11 @@ export default function ShoppingList() {
         </form>
         <ul>
           {state.map((item) => {
-            return <Item key={item.id} item={item.item} />;
+            return (
+              <li key={item.id} className={styles.bullet}>
+                <Item item={item} />
+              </li>
+            );
           })}
         </ul>
       </main>

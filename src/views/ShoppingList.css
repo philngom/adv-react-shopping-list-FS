@@ -2,3 +2,8 @@
   background-color: #b0d0d3;
   margin: 0;
 }
+
+.bullet {
+  list-style: none;
+  display: flex;
+}
