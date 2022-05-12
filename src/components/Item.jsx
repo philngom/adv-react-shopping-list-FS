@@ -3,6 +3,17 @@ import { useState } from 'react';
 
 export default function Item({ item, update }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [updateItem, setUpdateItem] = useState(item.item);
+
+  const handleItemUpdate = (e) => {
+    e.preventDefault();
+    update({
+      ...item,
+      item: updateItem,
+    });
+    setIsEditing(false);
+  };
+
   return (
     <>
       <input
@@ -15,9 +26,24 @@ export default function Item({ item, update }) {
           });
         }}
       />
-      <p style={{ margin: 0 }} className={item.done ? styles.done : ''}>
-        {item.item}
-      </p>
+      {isEditing ? (
+        <>
+          <form onSubmit={(e) => handleItemUpdate(e)}>
+            <input
+              value={updateItem}
+              onChange={(e) => setUpdateItem(e.target.value)}
+            />
+            <button type="submit">Update</button>
+          </form>
+        </>
+      ) : (
+        <>
+          <p style={{ margin: 0 }} className={item.done ? styles.done : ''}>
+            {item.item}
+          </p>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        </>
+      )}
     </>
   );
 }
