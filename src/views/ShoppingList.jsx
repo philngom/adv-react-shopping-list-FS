@@ -1,31 +1,14 @@
 import { useReducer, useState } from 'react';
 import styles from './ShoppingList.css';
+import { useShoppingList } from '../context/ShoppingListProvider';
 
-const initialState = [];
-
-const reducer = (state, action) => {
-  console.log(action);
-  switch (action.type) {
-    case 'add':
-      return [
-        ...state,
-        {
-          id: Date.now(),
-          item: action.payload.item,
-          done: false,
-        },
-      ];
-    default:
-      throw new Error('In reducer function');
-  }
-};
 export default function ShoppingList() {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [item, setItem] = useState('');
+  const { addItem, state } = useShoppingList();
 
-  const addItem = (e) => {
+  const handleAddItem = (e) => {
     e.preventDefault();
-    dispatch({ type: 'add', payload: { item } });
+    addItem(item);
     setItem('');
   };
 
@@ -36,7 +19,7 @@ export default function ShoppingList() {
         <p>Cart ({state.length})</p>
       </header>
       <main>
-        <form onSubmit={addItem}>
+        <form onSubmit={handleAddItem}>
           <input
             placeholder="Add an item to your cart"
             value={item}
@@ -44,6 +27,9 @@ export default function ShoppingList() {
           />
           <button>Add</button>
         </form>
+        {state.map((item) => (
+          <p>{item.item}</p>
+        ))}
       </main>
     </>
   );

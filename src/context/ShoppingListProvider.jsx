@@ -24,14 +24,12 @@ const ShoppingListContext = createContext();
 export const ShoppingListProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addItem = (e) => {
-    e.preventDefault();
+  const addItem = (item) => {
     dispatch({ type: 'add', payload: { item } });
-    setItem('');
   };
 
   return (
-    <ShoppingListContext.Provider value={addItem}>
+    <ShoppingListContext.Provider value={{ addItem, state }}>
       {children}
     </ShoppingListContext.Provider>
   );
