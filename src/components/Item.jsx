@@ -33,7 +33,9 @@ export default function Item({ item, update, deleteItem }) {
               value={updateItem}
               onChange={(e) => setUpdateItem(e.target.value)}
             />
-            <button type="submit">Update</button>
+            <button aria-label="update" type="submit">
+              Update
+            </button>
           </form>
         </>
       ) : (
@@ -41,10 +43,14 @@ export default function Item({ item, update, deleteItem }) {
           <p style={{ margin: 0 }} className={item.done ? styles.done : ''}>
             {item.item}
           </p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button aria-label="edit" onClick={() => setIsEditing(true)}>
+            Edit
+          </button>
         </>
       )}
-      <button onClick={() => deleteItem(item)}>Delete</button>
+      <button aria-label="delete" onClick={() => deleteItem(item)}>
+        Delete
+      </button>
     </>
   );
 }
