@@ -1,4 +1,4 @@
-import { screen, render } from '@testing-library/react';
+import { screen, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -28,5 +28,39 @@ describe('App', () => {
     userEvent.click(addItemButton);
 
     screen.getByText(/cart \(3\)/i);
+  });
+
+  it('should update item in cart', () => {
+    const input = screen.getByRole('textbox');
+
+    const addItemButton = screen.getByRole('button', {
+      name: /add/i,
+    });
+
+    userEvent.type(input, 'potatoes');
+    userEvent.click(addItemButton);
+
+    const itemToUpdate = screen.getByRole('list');
+
+    const editButton = within(itemToUpdate).getByRole('button', {
+      name: /edit/i,
+    });
+
+    userEvent.click(editButton);
+
+    const inputOfItemToUpdate = within(itemToUpdate).getByRole('textbox');
+
+    //clear input's value since it will contain 'potatoes' once user hits edit button
+    inputOfItemToUpdate.value = '';
+
+    userEvent.type(inputOfItemToUpdate, 'one potato');
+
+    const updateButton = within(itemToUpdate).getByRole('button', {
+      name: /update/i,
+    });
+
+    userEvent.click(updateButton);
+
+    screen.getByText(/one potato/i);
   });
 });
