@@ -7,7 +7,7 @@ describe('App', () => {
     render(<App />);
   });
 
-  it('should should able to add items to your cart, cart counter tracks # of items', () => {
+  it('should should able to add and delete items to your cart, cart counter tracks # of items', () => {
     screen.getByRole('heading', { name: /shopping list/i });
 
     screen.getByText(/cart \(0\)/i);
@@ -30,7 +30,9 @@ describe('App', () => {
     screen.getByText(/cart \(3\)/i);
   });
 
-  it('should update item in cart', () => {
+  it('should update and delete item in cart', () => {
+    screen.getByText(/cart \(0\)/i);
+
     const input = screen.getByRole('textbox');
 
     const addItemButton = screen.getByRole('button', {
@@ -39,6 +41,8 @@ describe('App', () => {
 
     userEvent.type(input, 'potatoes');
     userEvent.click(addItemButton);
+
+    screen.getByText(/cart \(1\)/i);
 
     const itemToUpdate = screen.getByRole('list');
 
@@ -62,5 +66,13 @@ describe('App', () => {
     userEvent.click(updateButton);
 
     screen.getByText(/one potato/i);
+
+    const deleteButton = within(itemToUpdate).getByRole('button', {
+      name: /delete/i,
+    });
+
+    userEvent.click(deleteButton);
+
+    screen.getByText(/cart \(0\)/i);
   });
 });
